@@ -8,8 +8,10 @@ import(
 	"os/exec"
 	"strings"
 )
+
+// The date is updated automatically by emacs.
 const (
-	version = "System info:<br>ip-code compiled on this date:::Sun Nov 22 04:02:40 2020"
+	version = "System info:<br>ip-code compiled on this date:::Sun Nov 22 06:33:22 2020"
 
 )
 
@@ -54,7 +56,6 @@ func color (color string) {
 }
 		
 func main() {
-	//    os.Setenv("FOO", "1")
 	fmt.Println("Content-type: text/html")
 	fmt.Println("")
 	cat("../html/ip.html")
@@ -74,8 +75,6 @@ func main() {
 		fmt.Println("QUERY_STRING:", os.Getenv("QUERY_STRING"),"<br>")
 		system_command("host",os.Getenv("REMOTE_ADDR"))
 	}
-	//	system_command("ls")
-	//	fmt.Println("</p>")
 	fmt.Println("</div>")
 	fmt.Println("</body>")
 	fmt.Println("</html>")

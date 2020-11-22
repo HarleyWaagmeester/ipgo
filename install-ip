@@ -2,9 +2,9 @@
 
 ## not sophisticated
 ## build the binary into the web site directory and rename it
-go build -o /home/nsa/websites/nsa.international/bin/  ip.go
-mv /home/nsa/websites/nsa.international/bin/ip /home/nsa/websites/nsa.international/bin/ip.cgi
-cp ip-go.css /home/nsa/websites/nsa.international/bin/ip-go.css
-cp background.png /home/nsa/websites/nsa.international/bin/background.png
-cp html/ip.html /home/nsa/websites/nsa.international/html/ip.html
+SERVERNAME=nsa.international
+go build -o /home/nsa/websites/${SERVERNAME}/bin/ip.cgi  ip.go
+cp css/ip.css /home/nsa/websites/${SERVERNAME}/css/ip.css
+cp images/background.png /home/nsa/websites/${SERVERNAME}/images/background.png
+cp html/ip.html /home/nsa/websites/${SERVERNAME}/html/ip.html
 
