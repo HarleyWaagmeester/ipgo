@@ -1,0 +1,6 @@
+#!/bin/bash
+
+## not sophisticated
+## build the binary into the web site directory and rename it
+go build -o /home/nsa/websites/nsa.international/bin/  go-env.go
+mv /home/nsa/websites/nsa.international/bin/go-env /home/nsa/websites/nsa.international/bin/goenv.cgi

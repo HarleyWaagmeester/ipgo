@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## not sophisticated
+## build the binary into the web site directory and rename it
+go build -o /home/nsa/websites/nsa.international/bin/  ip.go
+mv /home/nsa/websites/nsa.international/bin/ip /home/nsa/websites/nsa.international/bin/ip.cgi
+cp ip-go.css /home/nsa/websites/nsa.international/bin/ip-go.css
+cp background.png /home/nsa/websites/nsa.international/bin/background.png
+cp html/ip.html /home/nsa/websites/nsa.international/html/ip.html
+
