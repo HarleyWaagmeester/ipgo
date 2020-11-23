@@ -1,3 +1,6 @@
+// Web service utilizing a hosted language on HTML and CSS.
+
+
 package main
 
 import(
@@ -11,7 +14,7 @@ import(
 
 // The date is updated automatically by emacs.
 const (
-	version = "System info:<br>ip-code compiled on this date:::Mon Nov 23 05:19:59 2020"
+	version = "System info:<br>ip-code compiled on this date:::Mon Nov 23 16:14:22 2020"
 
 )
 
@@ -49,6 +52,10 @@ func cat(fname string) {
 	}
 }
 
+
+// Functions defining the IPGO language hosted on HTML and CSS.
+
+
 // use flex for floats
 func flexbox () {
 	fmt.Println("<div class='flexbox';>")
@@ -83,16 +90,14 @@ func div33_float_left () {
 func div66_float_left () {
 	fmt.Println("<div class='div66_float_left;'>")
 }
-func pull_left () {
-	fmt.Println("<span class='pull-left'>")
+// Shorthand for span_float_...
+func float_left () {
+	fmt.Println("<span class='float-left'>")
 }
-func pull_right () {
-	fmt.Println("<span class='pull-right'>")
+func float_right () {
+	fmt.Println("<span class='float-right'>")
 }
-func pull_center () {
-	fmt.Println("<span>")
-}
-func pull_off () {
+func float_off () {
 	fmt.Println("</span>")
 }
 func br () {
@@ -101,20 +106,23 @@ func br () {
 func div_off () {
 	fmt.Println("</div>")
 }
+
+// Read in HTML files, create HTML elements. execute external programs.
+
 func main() {
 	fmt.Println("Content-type: text/html")
 	fmt.Println("")
 	cat("../html/ip.html")
 	flexbox()
 	div33()
-	pull_left()
+	float_left()
 	fmt.Print("REMOTE_ADDR:")
-	pull_off()
-	pull_right()
+	float_off()
+	float_right()
 	color("green")
 	fmt.Print(os.Getenv("REMOTE_ADDR"))
 	color("off")
-	pull_off()
+	float_off()
 	br()
 	//	div_off()
 	//	flexbox_off()
@@ -130,14 +138,14 @@ func main() {
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
 		//	flexbox()
 		//div33()
-		pull_left()
+		float_left()
 		fmt.Print("QUERY_STRING:")
-		pull_off()
-		pull_right()
+		float_off()
+		float_right()
 		color("green")
 		fmt.Print(os.Getenv("QUERY_STRING"))
 		color("off")
-		pull_off()
+		float_off()
 		div_off()
 		flexbox_off()
 
@@ -147,24 +155,24 @@ func main() {
 		fmt.Print("&nbsp")
 		div_off()
 		div66_float_left()
-		//pull_right()
+		//float_right()
 		system_command("host",os.Getenv("REMOTE_ADDR"))
 		//		div_off()
 		floatbox_off()
-		//pull_off()
+		//float_off()
 		//		flexbox_off()
 	}
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"whois")){
 		//	flexbox()
 		//div33()
-		pull_left()
+		float_left()
 		fmt.Print("QUERY_STRING:")
-		pull_off()
-		pull_right()
+		float_off()
+		float_right()
 		color("green")
 		fmt.Print(os.Getenv("QUERY_STRING"))
 		color("off")
-		pull_off()
+		float_off()
 		div_off()
 		flexbox_off()
 
@@ -174,13 +182,13 @@ func main() {
 		// fmt.Print("&nbsp")
 		// div_off()
 		// div66_float_left()
-		//pull_right()
+		//float_right()
 		fmt.Println("<pre>")
 		system_command("whois",os.Getenv("REMOTE_ADDR"))
 		fmt.Println("</pre>")
 		//		div_off()
 		//		floatbox_off()
-		//pull_off()
+		//float_off()
 		//		flexbox_off()
 	}
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"help")){
