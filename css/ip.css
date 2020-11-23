@@ -1,22 +1,79 @@
-.oval-shape {
- //   width: 200px;
- //   height: 100px;
- background: blue;
- color:white;
- -moz-border-radius: 100px / 50px;
- -webkit-border-radius: 100px / 50px;
- border-radius: 100px / 50px;
- padding-left:75px;
-}
 
 body {
-     /* background: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) ), url('background.png'); */
+     /* background: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) ), url('../images/background.png'); */
      background-color: #bbb;
 }
 
-.divip {
-    width: 200px;
+.base {
+    width 100%;
+}
+
+/* The contents of this element are centered */
+.flexbox {
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+.div33 {
+    display: inline-block;
+    width: 33.33%;
     word-wrap: break-word;
+    /* border-style: solid; */
+    /* border-width: 1px; */
+    /* border-color: #000; */
+}
+.div66 {
+    display: inline-block;
+    width: 66%;
+    word-wrap: break-word;
+    /* border-style: solid; */
+    /* border-width: 1px; */
+    /* border-color: #000; */
+}
+.div33_float_left {
+    display: inline-block;
+    width: 33.33%;
+    float: left;
+    word-wrap: break-word;
+    /* border-style: solid; */
+    /* border-width: 1px; */
+    /* border-color: #000; */
+}
+.div66_float_left {
+    display: inline-block;
+    width: 66%;
+    float: left;
+    word-wrap: break-word;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
+}
+
+.banner {
+    width 30%;
+    background-color:white;
+    color:green;
+    font-size: large;
+    text-align: center;
+}
+
+.span_green {
+    color: green;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.block {
+    display: inline-block;
+    background-color: cyan;
+    width: 100%;
 }
 
 p {
@@ -35,14 +92,13 @@ p {
     /* margin: 0 auto; */
     padding:10px;
 }
-.banner {
-    background-color:white;
-    color:green;
-    font-size: large;
-    text-align: center;
-    margin: auto;
-}
-
-.spanip {
-    color:green;
+.oval-shape {
+ //   width: 200px;
+ //   height: 100px;
+ background: blue;
+ color:white;
+ -moz-border-radius: 100px / 50px;
+ -webkit-border-radius: 100px / 50px;
+ border-radius: 100px / 50px;
+ padding-left:75px;
 }
