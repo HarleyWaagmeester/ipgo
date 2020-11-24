@@ -9,7 +9,7 @@ Project parameters:
 
 Result:
 	A hosted language named IPGO
-	utilizing the HTML and CSS languages
+	utilizing the HTML and CSS languages,
 	was created.
 
 	IPGO is used to run external programs
@@ -31,7 +31,7 @@ Instructions:
                     |
 		    images
 		    
-	Set the the __your_website__ variable
+	Set the __your_website__ variable
 	in install-ip, to your website directory.
 	Execute ./install-ip.
 
