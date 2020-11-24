@@ -28,7 +28,9 @@ Instructions:
 	    	    html
 	    	    |
 	    	    css
-
+                    |
+		    images
+		    
 	Set the the __your_website__ variable
 	in install-ip, to your website directory.
 	Execute ./install-ip.
