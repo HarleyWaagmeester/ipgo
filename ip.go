@@ -191,12 +191,15 @@ func main() {
 		//float_off()
 		//		flexbox_off()
 	}
+	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"env")){                                                                 fmt.Println("<pre>")                                                                                            fmt.Println("environment\n\n")                                                                                  for _, pair := range os.Environ() {                                                                                     fmt.Println(pair)                                                                                       }                                                                                                               fmt.Println("</pre>")                                                                                   }  
+
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"help")){
 		fmt.Println("NSA // MasterTools provides:<br>")
 		fmt.Println("ip.cgi?help<br>")
 		fmt.Println("ip.cgi?version<br>")
 		fmt.Println("ip.cgi?host<br>")
 		fmt.Println("ip.cgi?whois<br>")
+		fmt.Println("ip.cgi?env<br>")
 	}
 	
 
