@@ -1,0 +1,53 @@
+// Functions defining the IPGO language hosted on HTML and CSS.
+
+
+// use flex for floats
+func flexbox () {
+	fmt.Println("<div class='flexbox';>")
+}
+func flexbox_off () {
+	fmt.Println("</div>")
+}
+func floatbox () {
+	fmt.Println("<div class='floatbox';>")
+}
+func floatbox_off () {
+	fmt.Println("</div>")
+}
+// span colors
+func color (color string) {
+	if color == "green" {
+		fmt.Println("<span class=span_green>")
+	}
+	if color == "off" {
+		fmt.Println("</span>")
+	}
+}
+func div33 () {
+	fmt.Println("<div class='div33'>")
+}
+func div66 () {
+	fmt.Println("<div class='div66;'>")
+}
+func div33_float_left () {
+	fmt.Println("<div class='div33_float_left'>")
+}
+func div66_float_left () {
+	fmt.Println("<div class='div66_float_left;'>")
+}
+// Shorthand for span_float_...
+func float_left () {
+	fmt.Println("<span class='float-left'>")
+}
+func float_right () {
+	fmt.Println("<span class='float-right'>")
+}
+func float_off () {
+	fmt.Println("</span>")
+}
+func br () {
+	fmt.Println("<br>")
+}
+func div_off () {
+	fmt.Println("</div>")
+}
