@@ -15,7 +15,7 @@ import(
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-	version = "System info:<br>ipgo.go compiled on this date:::Sun Jan 31 19:25:28 2021"
+	version = "System info:<br>ipgo.go compiled on this date:::Sun Jan 31 20:05:21 2021"
 
 )
 
@@ -233,8 +233,7 @@ func main() {
 	// 	fmt.Println(e,"<br>")
 	// }
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"version")){
-		fmt.Println("The version function is disabled for security reasons.<br>")
-		//		fmt.Println(version,"<br>")
+		fmt.Println(version,"<br>")
 	}
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
 		//	flexbox()
@@ -293,11 +292,12 @@ func main() {
 		//		flexbox_off()
 	}
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"env")){
-		fmt.Println("<pre>")
-		fmt.Println("environment\n\n")
-		for _, pair := range os.Environ() {
-			fmt.Println(pair)}
-		fmt.Println("</pre>")
+		fmt.Println("The environment function is disabled for security reasons.<br>")
+		// fmt.Println("<pre>")
+		// fmt.Println("environment\n\n")
+		// for _, pair := range os.Environ() {
+		// 	fmt.Println(pair)}
+		// fmt.Println("</pre>")
 	}
 
 	if(strings.EqualFold(os.Getenv("QUERY_STRING"),"help")){
