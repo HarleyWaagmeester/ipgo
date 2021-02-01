@@ -30,6 +30,8 @@ Instructions:
 	    	    css
                     |
 		    images
+		    |
+		    conf
 		    
 	Set the __your_website__ variable
 	in install-ip, to your website directory.

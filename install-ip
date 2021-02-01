@@ -3,8 +3,8 @@
 ## not sophisticated
 ## build the binary into the web site directory and copy the other site files
 WEBSITE_DIRECTORY=__your_website__
-go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  ip.go
-cp css/ip.css ${WEBSITE_DIRECTORY}/css/ip.css
-cp images/background.png ${WEBSITE_DIRECTORY}/images/background.png
-cp html/ip.html ${WEBSITE_DIRECTORY}/html/ip.html
-
+go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  src/ip.go
+cp css/ip.css ${WEBSITE_DIRECTORY}/css/
+cp images/background.png ${WEBSITE_DIRECTORY}/images/
+cp html/ip.html ${WEBSITE_DIRECTORY}/html/
+cp conf/ipgo_config.json ${WEBSITE_DIRECTORY}/conf/
