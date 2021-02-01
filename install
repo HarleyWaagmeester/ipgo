@@ -1,9 +1,0 @@
-#!/bin/bash
-
-## not sophisticated
-## build the binary into the web site directory and rename it
-WEBSITE_DIRECTORY=__your_website__
-go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  ip.go
-cp css/ip.css ${WEBSITE_DIRECTORY}/css/ip.css
-cp images/background.png ${WEBSITE_DIRECTORY}/images/background.png
-cp html/ip.html ${WEBSITE_DIRECTORY}/html/ip.html

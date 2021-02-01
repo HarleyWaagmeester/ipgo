@@ -2,7 +2,7 @@
 
 ## not sophisticated
 ## build the binary into the web site directory and copy the other site files
-WEBSITE_DIRECTORY=__your_website__
+WEBSITE_DIRECTORY=__your_website_directory__
 go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  src/ip.go
 cp css/ip.css ${WEBSITE_DIRECTORY}/css/
 cp images/background.png ${WEBSITE_DIRECTORY}/images/

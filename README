@@ -21,17 +21,17 @@ Instructions:
 	where your apache2 or nginx or whatever
 	can find it.
 	
-	your_website
-		    |
-	    	    bin
-	    	    |
-	    	    html
-	    	    |
-	    	    css
-                    |
-		    images
-		    |
-		    conf
+	your_website_directory
+		              |
+	    	              bin
+	    	              |
+	    	              html
+	    	              |
+	    	              css
+                              |
+		              images
+		              |
+		              conf
 		    
 	Set the __your_website__ variable
 	in install-ip, to your website directory.
