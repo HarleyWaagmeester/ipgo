@@ -1,10 +1,27 @@
 #!/bin/bash
 
 ## not sophisticated
-## build the binary into the web site directory and copy the other site files
-WEBSITE_DIRECTORY=__your_website_directory__
+## build the binary into the web site directory and rename it
+
+# Read the website_directory setting from the config file, and remove the quotes.
+while read var val;
+do
+    if [ $var = "\"website_directory\":" ]; then
+        val="${val%\"}";
+        val="${val#\"}";
+        WEBSITE_DIRECTORY=$val
+    fi
+done < conf/ipgo_config.json
+
+mkdir -p $WEBSITE_DIRECTORY/bin
+mkdir -p $WEBSITE_DIRECTORY/css
+mkdir -p $WEBSITE_DIRECTORY/images
+mkdir -p $WEBSITE_DIRECTORY/html
+mkdir -p $WEBSITE_DIRECTORY/conf
+
 go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  src/ip.go
 cp css/ip.css ${WEBSITE_DIRECTORY}/css/
 cp images/background.png ${WEBSITE_DIRECTORY}/images/
 cp html/ip.html ${WEBSITE_DIRECTORY}/html/
 cp conf/ipgo_config.json ${WEBSITE_DIRECTORY}/conf/
+
