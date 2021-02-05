@@ -15,7 +15,7 @@ import(
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Thu Feb  4 16:57:49 2021"
+        version = "System info:<br>ipgo.go compiled on this date:::Thu Feb  4 18:27:12 2021"
 
 )
 

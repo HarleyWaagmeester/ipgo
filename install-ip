@@ -17,7 +17,6 @@ mkdir -p $WEBSITE_DIRECTORY/bin
 mkdir -p $WEBSITE_DIRECTORY/css
 mkdir -p $WEBSITE_DIRECTORY/images
 mkdir -p $WEBSITE_DIRECTORY/html
-mkdir -p $WEBSITE_DIRECTORY/conf
 
 go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  src/ip.go
 cp css/ip.css ${WEBSITE_DIRECTORY}/css/
