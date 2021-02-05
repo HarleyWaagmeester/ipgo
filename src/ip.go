@@ -15,7 +15,7 @@ import(
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Thu Feb  4 18:27:12 2021"
+        version = "System info:<br>ipgo.go compiled on this date:::Thu Feb  4 20:09:20 2021"
 
 )
 
@@ -71,6 +71,9 @@ func br () {
         fmt.Println("<br>")
 }
 func div_off () {
+        fmt.Println("</div>")
+}
+func div_close () {
         fmt.Println("</div>")
 }
 
@@ -199,7 +202,7 @@ func create_menu(website_directory string) {
         li("<a href=" + website_directory + "/bin/ip.cgi?version> version</a>")
         li("<a href=" + website_directory + "/bin/ip.cgi?help> help</a>")
         ulclose()
-        div_off()
+        div_close()
 }
 
 //////////////////////////// MAIN /////////////////////////////////////////////////
