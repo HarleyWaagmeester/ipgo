@@ -11,11 +11,12 @@ import(
         "os/exec"
         "strings"
         "encoding/json"
+	"bufio"
 )
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Thu Feb  4 20:09:20 2021"
+        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 10:11:45 2021"
 
 )
 
@@ -157,6 +158,37 @@ func cat(fname string) {
 
 ////////////////////  Configuration file operations  ////////////////////////////////////////////////////
 
+// Read a text file into memory.
+// Return a slice of the lines.
+func readLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
+}
+
+func get_configuration_parameter(p string) string{
+	m := make(map[string]string)
+	lines, err := readLines("../conf/ipgo.conf")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	for _, line := range lines {
+		s := strings.Split(line, " ")
+		m[s[0]] = s[1]
+	}
+	return m[p]
+}
+
+
 type Configuration struct {
         Website_url string
         Website_directory string
@@ -211,9 +243,15 @@ func create_menu(website_directory string) {
 // Read in HTML files, create HTML elements. execute external programs.
 
 func main() {
-        var website_directory string = read_configuration_file("../conf/ipgo_config.json", "website_directory")
-        var website_url string = read_configuration_file("../conf/ipgo_config.json", "website_url")
-        if  website_directory != "error" {
+
+        var website_url string       = get_configuration_parameter("website_url")
+        var website_directory string = get_configuration_parameter("website_directory")
+	//	if (website_url == "" | website_directory == "")
+	
+        // var website_directory string = read_configuration_file("../conf/ipgo_config.json", "website_directory")
+        // var website_url string = read_configuration_file("../conf/ipgo_config.json", "website_url")
+
+        if  website_directory != "" {
                 log_system_init("info.log", "error.log")
                 response_header()
                 cat("../html/ip.html")

@@ -1,18 +1,32 @@
 #!/bin/bash
 
 ## not sophisticated
+## create the server directory structure and populate it
 ## build the binary into the web site directory and rename it
 
-# Read the website_directory setting from the config file, and remove the quotes.
-while read var val;
+CONF_FILE=conf/ipgo.conf
+
+[ -f $CONF_FILE ] || { echo cannot find config file: $CONF_FILE; echo exiting; exit 0; }
+
+# Read the website_directory setting from the config file.
+while read opt val;
 do
-    if [ $var = "\"website_directory\":" ]; then
-        val="${val%\"}";
-        val="${val#\"}";
+    if [ $opt = "website_directory" ]; then
         WEBSITE_DIRECTORY=$val
     fi
-done < conf/ipgo_config.json
+done < $CONF_FILE
 
+echo installing to $WEBSITE_DIRECTORY
+
+echo "continue? (y/N)"
+
+read -rsn1 c
+if [ "$c" != "y" ]; then
+    echo "Not installing."
+    exit 1
+fi
+
+mkdir -p $WEBSITE_DIRECTORY
 mkdir -p $WEBSITE_DIRECTORY/bin
 mkdir -p $WEBSITE_DIRECTORY/css
 mkdir -p $WEBSITE_DIRECTORY/images
@@ -20,9 +34,10 @@ mkdir -p $WEBSITE_DIRECTORY/html
 mkdir -p $WEBSITE_DIRECTORY/conf
 
 go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  src/ip.go
-cp css/ip.css ${WEBSITE_DIRECTORY}/css/
-cp images/background.png ${WEBSITE_DIRECTORY}/images/
-cp html/ip.html ${WEBSITE_DIRECTORY}/html/
-cp html/error.html ${WEBSITE_DIRECTORY}/html/
-cp conf/ipgo_config.json ${WEBSITE_DIRECTORY}/conf/
+install -m644 css/ip.css ${WEBSITE_DIRECTORY}/css/
+install -m644 images/background.png ${WEBSITE_DIRECTORY}/images/
+install -m644 html/ip.html ${WEBSITE_DIRECTORY}/html/
+install -m644 html/error.html ${WEBSITE_DIRECTORY}/html/
+install -m644 conf/ipgo.conf ${WEBSITE_DIRECTORY}/conf/
 
+echo "Finished installing."
