@@ -16,7 +16,7 @@ import(
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 10:11:45 2021"
+        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 17:34:05 2021"
 
 )
 
@@ -181,8 +181,12 @@ func get_configuration_parameter(p string) string{
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	for _, line := range lines {
-		s := strings.Split(line, " ")
+       for _, line := range lines {                                                                             
+                if len (line) == 0{                                                                              
+                        continue}                                                                                
+                if line[0] == 35{                                                                                
+                        continue}                                                                                
+	       s := strings.Fields(line)
 		m[s[0]] = s[1]
 	}
 	return m[p]
@@ -228,11 +232,11 @@ func create_menu(website_directory string) {
         div()
         fmt.Println ("A reflection upon your ip address.")
         ul()
-        li("<a href=" + website_directory + "/bin/ip.cgi?host> host</a>")
-        li("<a href=" + website_directory + "/bin/ip.cgi?whois> whois</a>")
-        li("<a href=" + website_directory + "/bin/ip.cgi?env> env</a>")
-        li("<a href=" + website_directory + "/bin/ip.cgi?version> version</a>")
-        li("<a href=" + website_directory + "/bin/ip.cgi?help> help</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?host> host</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?whois> whois</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?env> env</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?version> version</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?help> help</a>")
         ulclose()
         div_close()
 }
