@@ -16,7 +16,7 @@ import(
 
 // The date is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 17:34:05 2021"
+        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 18:18:26 2021"
 
 )
 
@@ -228,7 +228,7 @@ func response_header(){
         fmt.Println("")
 }
 
-func create_menu(website_directory string) {
+func create_menu(website_url string) {
         div()
         fmt.Println ("A reflection upon your ip address.")
         ul()
