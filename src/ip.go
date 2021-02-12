@@ -12,13 +12,14 @@ import(
         "strings"
         "encoding/json"
 	"bufio"
+	"date_constant" // src/date_constant/date_constant.go, GOPATH is set in install-ip
 )
 
-// The date is updated automatically by a user emacs function named insert-timestamp.
+// This 'file saved date' record is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go compiled on this date:::Sat Feb  6 18:18:26 2021"
-
+        version = "System info:<br>ipgo.go modified on this date:::Thu Feb 11 22:03:31 2021"
 )
+
 
 /////////////////////  Functions defining the IPGO language hosted on HTML and CSS.  ////////////////////////////////////////////////////////////
 
@@ -181,12 +182,12 @@ func get_configuration_parameter(p string) string{
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-       for _, line := range lines {                                                                             
-                if len (line) == 0{                                                                              
+	for _, line := range lines {                                                                             
+		if len (line) == 0{                                                                              
                         continue}                                                                                
-                if line[0] == 35{                                                                                
+		if line[0] == 35{                                                                                
                         continue}                                                                                
-	       s := strings.Fields(line)
+		s := strings.Fields(line)
 		m[s[0]] = s[1]
 	}
 	return m[p]
@@ -244,19 +245,19 @@ func create_menu(website_url string) {
 //////////////////////////// MAIN /////////////////////////////////////////////////
 
 
-// Read in HTML files, create HTML elements. execute external programs.
+// Read configuration options, HTML files, create HTML elements. execute external programs.
 
 func main() {
 
         var website_url string       = get_configuration_parameter("website_url")
         var website_directory string = get_configuration_parameter("website_directory")
-	//	if (website_url == "" | website_directory == "")
 	
         // var website_directory string = read_configuration_file("../conf/ipgo_config.json", "website_directory")
         // var website_url string = read_configuration_file("../conf/ipgo_config.json", "website_url")
 
-        if  website_directory != "" {
-                log_system_init("info.log", "error.log")
+	if (!(website_url == "" || website_directory == "")) {
+	
+		log_system_init("info.log", "error.log")
                 response_header()
                 cat("../html/ip.html")
                 create_menu(website_url)
@@ -280,7 +281,7 @@ func main() {
                 //      fmt.Println(e,"<br>")
                 // }
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"version")){
-                        fmt.Println(version,"<br>")
+                        fmt.Println("ip.go compiled on: " + date_constant.DATE + "<br>")
                 }
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
                         //      flexbox()
