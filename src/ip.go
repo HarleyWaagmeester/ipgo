@@ -12,12 +12,13 @@ import(
         "strings"
         "encoding/json"
 	"bufio"
-	"date_constant" // src/date_constant/date_constant.go, GOPATH is set in install-ip
+	"compile_time" // src/compile_time/compile_time.go, GOPATH is set in install-ip
+	"testing"
 )
 
 // This 'file saved date' record is updated automatically by a user emacs function named insert-timestamp.
 const (
-        version = "System info:<br>ipgo.go modified on this date:::Thu Feb 11 22:03:31 2021"
+        version = "Version info:<br>ipgo.go modified on:::Sun 14 Feb 2021 11:55:43 PM UTC"
 )
 
 
@@ -242,13 +243,17 @@ func create_menu(website_url string) {
         div_close()
 }
 
+func TestMax(t *testing.T) {
+	t.Logf("Testing Foo")
+	t.Fail()
+}
 //////////////////////////// MAIN /////////////////////////////////////////////////
 
 
 // Read configuration options, HTML files, create HTML elements. execute external programs.
 
 func main() {
-
+	
         var website_url string       = get_configuration_parameter("website_url")
         var website_directory string = get_configuration_parameter("website_directory")
 	
@@ -281,7 +286,8 @@ func main() {
                 //      fmt.Println(e,"<br>")
                 // }
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"version")){
-                        fmt.Println("ip.go compiled on: " + date_constant.DATE + "<br>")
+                        fmt.Println("<pre>" + version + "<br>")
+                        fmt.Println("ip.go compiled on:    " + compile_time.DATE + "</pre><br>")
                 }
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
                         //      flexbox()
