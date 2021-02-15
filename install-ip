@@ -17,8 +17,12 @@ echo "const (DATE string = \"$DATE\")"            >> $GOPATH/src/compile_time/co
 ######################################################################################
 
 CONF_FILE=conf/ipgo.conf
-
-echo ----- READ THIS CAREFULLY -----
+echo ------------------------------------------------------------------------------------
+echo "----- READ THIS CAREFULLY"
+echo "----- BE SURE YOU ARE USING THE CORRECT WEBSITE_DIRECTORY             -----"
+echo "----- AN INCORRECT SETTING HERE CAN CREATE HAVOC ON YOUR FILESYSTEM   -----"
+echo "----- NEVER RUN THIS SCRIPT WITH 'sudo' OR AS THE 'root' ACCOUNT      -----"
+echo ------------------------------------------------------------------------------------
 [ -f $CONF_FILE ] || { echo cannot find config file: $CONF_FILE; echo exiting; exit 0; }
 [ -f $CONF_FILE ] && { echo reading configuration from: $CONF_FILE; }
 
@@ -35,7 +39,19 @@ done < $CONF_FILE
 
 echo installing to:" $WEBSITE_DIRECTORY"
 echo using url:"     $WEBSITE_URL"
-echo "continue? (y/N)"
+echo
+echo AFTER INSPECTION ARE THESE SETTINGS CORRECT ?
+echo "continue? (y/N) [default is No]"
+
+read -rsn1 c
+if [ "$c" != "y" ]; then
+    echo "Not installing."
+    exit 1
+fi
+echo
+
+echo "Do you wish to continue the installation with these settings ?"
+echo "continue? (y/N) [default is No]"
 
 read -rsn1 c
 if [ "$c" != "y" ]; then
@@ -51,12 +67,13 @@ mkdir -p $WEBSITE_DIRECTORY/html
 mkdir -p $WEBSITE_DIRECTORY/conf
 
 
-## Build the binary into the website location. Exit if there is a compiler erro.
+## Build the binary into the website location. Exit if there is a compiler error.
 
 src_file=src/ip.go
 output=$(go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  ${src_file} 2>&1)
 
 ## If the compiler prints out a line with the source file name in it, there was likely an error.
+## The golang compiler doesn't provide exit values, so scraping the output is the only recourse.
 grep  -i ${src_file} <<< $output
 if [ $? -eq 0 ]; then
     echo "Golang detected a compilation error."; echo "Not installing."; exit 1 
