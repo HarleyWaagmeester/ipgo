@@ -5,9 +5,10 @@
 ## create the server directory structure and populate it
 ## build the binary into the web site directory and rename it
 
+SRCFILE=src/ip.go
 
 
-## Create a golang source file with a constant string containing the time this script ran.
+## Create a golang source file with a string constant containing the time this script ran.
 ## Presumably this will also be the time the golang source was compiled.
 export GOPATH=`pwd`
 DATE=$(date -u)
@@ -23,8 +24,9 @@ echo "----- BE SURE YOU ARE USING THE CORRECT WEBSITE_DIRECTORY             ----
 echo "----- AN INCORRECT SETTING HERE CAN CREATE HAVOC ON YOUR FILESYSTEM   -----"
 echo "----- NEVER RUN THIS SCRIPT WITH 'sudo' OR AS THE 'root' ACCOUNT      -----"
 echo ------------------------------------------------------------------------------------
+echo
 [ -f $CONF_FILE ] || { echo cannot find config file: $CONF_FILE; echo exiting; exit 0; }
-[ -f $CONF_FILE ] && { echo reading configuration from: $CONF_FILE; }
+[ -f $CONF_FILE ] && { echo reading configuration from: $PWD/$CONF_FILE; }
 
 # Read the website_directory and website_url settings from the config file.
 while read opt val;
@@ -48,8 +50,8 @@ if [ "$c" != "y" ]; then
     echo "Not installing."
     exit 1
 fi
-echo
 
+echo
 echo "Do you wish to continue the installation with these settings ?"
 echo "continue? (y/N) [default is No]"
 
@@ -59,32 +61,58 @@ if [ "$c" != "y" ]; then
     exit 1
 fi
 
+echo
+echo --------------------------------------
+echo "Creating website directory structure."
+echo
+
 mkdir -p $WEBSITE_DIRECTORY
 mkdir -p $WEBSITE_DIRECTORY/bin
 mkdir -p $WEBSITE_DIRECTORY/css
 mkdir -p $WEBSITE_DIRECTORY/images
 mkdir -p $WEBSITE_DIRECTORY/html
 mkdir -p $WEBSITE_DIRECTORY/conf
+mkdir -p $WEBSITE_DIRECTORY/log
+
+echo $WEBSITE_DIRECTORY
+echo $WEBSITE_DIRECTORY/bin
+echo $WEBSITE_DIRECTORY/css
+echo $WEBSITE_DIRECTORY/images
+echo $WEBSITE_DIRECTORY/html
+echo $WEBSITE_DIRECTORY/conf
+echo $WEBSITE_DIRECTORY/log
+echo --------------------------------------
 
 
 ## Build the binary into the website location. Exit if there is a compiler error.
+echo
+echo --------------------------------------------------------
+echo "Compiling source files with golang compiler. Plese wait." 
+echo
 
-src_file=src/ip.go
-output=$(go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  ${src_file} 2>&1)
-
+output=$(go build -o ${WEBSITE_DIRECTORY}/bin/ip.cgi  ${SRCFILE} 2>&1)
 ## If the compiler prints out a line with the source file name in it, there was likely an error.
-## The golang compiler doesn't provide exit values, so scraping the output is the only recourse.
-grep  -i ${src_file} <<< $output
-if [ $? -eq 0 ]; then
-    echo "Golang detected a compilation error."; echo "Not installing."; exit 1 
+if [ $? -eq 1 ]; then
+    echo "Golang detected a compilation error.";
+    grep  -i ${SRCFILE} <<< $output
+    echo "Not installing.";
+    echo --------------------------------------------
+    exit 1 
 fi
+    echo "Finished compiling.";
+    echo --------------------------------------------
 
 ## Install the website files.
+echo
+echo --------------------------------------------------------
+echo "Installing the website files. Plese wait." 
+echo
 
-install -m644 css/ip.css ${WEBSITE_DIRECTORY}/css/
-install -m644 images/background.png ${WEBSITE_DIRECTORY}/images/
-install -m644 html/ip.html ${WEBSITE_DIRECTORY}/html/
-install -m644 html/error.html ${WEBSITE_DIRECTORY}/html/
-install -m644 conf/ipgo.conf ${WEBSITE_DIRECTORY}/conf/
+install -v -m644 css/*.css ${WEBSITE_DIRECTORY}/css/
+install -v -m644 images/* ${WEBSITE_DIRECTORY}/images/
+install -v -m644 html/*.html ${WEBSITE_DIRECTORY}/html/
+install -v -m644 conf/ipgo.conf ${WEBSITE_DIRECTORY}/conf/
 
+echo
 echo "Finished installing."
+echo --------------------------------------------

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- version 1.0 -->
+    <meta charset='utf-8'>
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <link rel='stylesheet' href='../css/host-child.css'>
+    <link rel='stylesheet' href='../css/tooltip.css'>
+  </head>
+  <body>
+    <div>
+      <div class="span_fixed"><H2>National Software Association // Master Tools</H2></div>
+      <h2>host lookup</h2>
+      <br>
+      <div style="margin-left: 15px;">
+	<form name=host-input action=/host-child onsubmit="return Hostvalidation('div_hidden')">
+	  <span>
+	    <label for="ip">hostname or ip address:</label><br>
+	    <input class="css-input tooltip" type="text" id="ip-input" name="ip" value="" placeholder="hostname or ip"><br>
+	  </span>
+	  <br>
+	  <span>
+	    <label for="ip">nameserver:</label><br>
+	    <input class="css-input" type="text" id="nameserver-i  nput" name="nameserver" value="127.0.0.1"><br>
+	  </span>
+	  <br><br>
+	  <span>
+	    <input class="css-input" style="padding-left: 8px; padding-right: 8px;" type="submit" value="Submit">
+	  </span>
+	</form>
+      </div>
+      <div id=div_hidden class="div_hidden">
+	hidden message div (dev status)
+      </div>
+      </div>
+
+    <script src="/js/host-child.js"></script>
+  </body>
+</html>

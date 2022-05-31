@@ -3,7 +3,7 @@
 
 package main
 
-import(
+mport(
         "fmt"
         "os"
         "log"
@@ -12,13 +12,19 @@ import(
         "strings"
         "encoding/json"
 	"bufio"
+	"net/url"
 	"compile_time" // src/compile_time/compile_time.go, GOPATH is set in install-ip
 	"testing"
 )
 
-// This 'file saved date' record is updated automatically by a user emacs function named insert-timestamp.
+// The version date is updated automatically by an emacs user function named insert-timestamp-mode.
+// https://github.com/harleywaagmeester/insert-timestamp-mode.git
 const (
-        version = "Version info:<br>ipgo.go modified on:::Sun 14 Feb 2021 11:55:43 PM UTC"
+        version = "Version info:<br>ipgo.go modified on:::Tue 31 May 2022 02:30:22 AM UTC"
+)
+
+const (
+        CONFIG_FILE = "../conf/ipgo.conf"
 )
 
 
@@ -37,7 +43,7 @@ func floatbox_off () {
         fmt.Println("</div>")
 }
 // span colors
-func color (color string) {
+func span_color (color string) {
         if color == "green" {
                 fmt.Println("<span class=span_green>")
         }
@@ -45,11 +51,23 @@ func color (color string) {
                 fmt.Println("</span>")
         }
 }
+func span_off()  {
+	fmt.Println("</span>")
+}
 func div () {
         fmt.Println("<div>")
 }
+func div_block () {
+        fmt.Println("<div class='div_block'>")
+}
 func div33 () {
         fmt.Println("<div class='div33'>")
+}
+func div33_result () {
+        fmt.Println("<div class='div33_result'>")
+}
+func div_result_fixed () {
+        fmt.Println("<div class='div_result_fixed'>")
 }
 func div66 () {
         fmt.Println("<div class='div66;'>")
@@ -69,6 +87,9 @@ func float_right () {
 }
 func float_off () {
         fmt.Println("</span>")
+}
+func span_result_fixed () {
+	fmt.Println("<span class='span_result_fixed'>")
 }
 func br () {
         fmt.Println("<br>")
@@ -104,7 +125,7 @@ var (
 func log_system_init(info_file string, error_file string) {
 
         errorHandle, _ := os.OpenFile(error_file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-        infoHandle, _ := os.OpenFile(info_file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+        infoHandle, _  := os.OpenFile(info_file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 
 
         Info = log.New(infoHandle,
@@ -129,12 +150,12 @@ func system_command(command ...string) int{
                 return 1
         }
         //fmt.Println("<pre>")
-        cmd := &exec.Cmd {
-                Path: prog,
-                        Args: []string{command[0],command[1]},
-                        Stdout: os.Stdout,
-                        Stderr: os.Stdout,
-                }
+        cmd := &exec.Cmd{
+		Path: prog,
+		Args: []string{command[0],command[1]},
+		Stdout: os.Stdout,
+		Stderr: os.Stdout,
+	}
         if err := cmd.Run(); err != nil {
                 fmt.Println("ERROR:",err)
         }
@@ -179,7 +200,7 @@ func readLines(path string) ([]string, error) {
 
 func get_configuration_parameter(p string) string{
 	m := make(map[string]string)
-	lines, err := readLines("../conf/ipgo.conf")
+	lines, err := readLines(CONFIG_FILE)
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -237,8 +258,20 @@ func create_menu(website_url string) {
         li("<a href=" + website_url + "/bin/ip.cgi?host> host</a>")
         li("<a href=" + website_url + "/bin/ip.cgi?whois> whois</a>")
         li("<a href=" + website_url + "/bin/ip.cgi?env> env</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?tools_menu> tools menu</a>")
         li("<a href=" + website_url + "/bin/ip.cgi?version> version</a>")
         li("<a href=" + website_url + "/bin/ip.cgi?help> help</a>")
+        ulclose()
+        div_close()
+}
+func create_tools_menu(website_url string) {
+        div_block()
+        ul()
+        li("<a href=" + website_url + "/bin/ip.cgi?tools_host> host</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?tools_whois> whois</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?env> env</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?version> version</a>")
+        li("<a href=" + website_url + "/bin/ip.cgi?tools_help> help</a>")
         ulclose()
         div_close()
 }
@@ -247,6 +280,12 @@ func TestMax(t *testing.T) {
 	t.Logf("Testing Foo")
 	t.Fail()
 }
+////////////////////////////// badge //////////////////////////////////////////////
+func nsa_type_text_badge () {
+	fmt.Print ("<H3>National Software Association // Master Tools</H3><br>")
+}
+///////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////// MAIN /////////////////////////////////////////////////
 
 
@@ -256,49 +295,133 @@ func main() {
 	
         var website_url string       = get_configuration_parameter("website_url")
         var website_directory string = get_configuration_parameter("website_directory")
-	
-        // var website_directory string = read_configuration_file("../conf/ipgo_config.json", "website_directory")
-        // var website_url string = read_configuration_file("../conf/ipgo_config.json", "website_url")
 
 	if (!(website_url == "" || website_directory == "")) {
-	
 		log_system_init("info.log", "error.log")
-                response_header()
-                cat("../html/ip.html")
-                create_menu(website_url)
-                flexbox()
-                div33()
-                float_left()
-                fmt.Print("REMOTE_ADDR:")
-                float_off()
-                float_right()
-                color("green")
-                fmt.Print(os.Getenv("REMOTE_ADDR"))
-                color("off")
-                float_off()
-                br()
-                //      div_off()
-                //      flexbox_off()
-                //      fmt.Println("QUERY_STRING:", os.Getenv("QUERY_STRING"), "<br>")
-                // for _, e := range os.Environ() {
-                //      //        pair := strings.SplitN(e, "=", 2)
-                //      //        p(pair[0],"=",pair[1])
-                //      fmt.Println(e,"<br>")
-                // }
+		response_header()
+		/////////////////////////////////////// std //////////////////////////////////////////
+		if(strings.EqualFold(os.Getenv("QUERY_STRING"),"directory")){
+			cat("../html/ip.html")
+			create_menu(website_url)
+			flexbox()
+			div33()
+			float_left()
+			fmt.Print("REMOTE_ADDR:")
+			float_off()
+			float_right()
+			span_color("green")
+			fmt.Print(os.Getenv("REMOTE_ADDR"))
+			span_color("off")
+			float_off()
+			br()
+			//      div_off()
+			//      flexbox_off()
+			//      fmt.Println("QUERY_STRING:", os.Getenv("QUERY_STRING"), "<br>")
+			// for _, e := range os.Environ() {
+			//      //        pair := strings.SplitN(e, "=", 2)
+			//      //        p(pair[0],"=",pair[1])
+			//      fmt.Println(e,"<br>")
+			// }
+		}
+		/////////////////////////////////////// tools_menu //////////////////////////////////////////
+                if(strings.EqualFold(os.Getenv("QUERY_STRING"),"tools_menu")){
+			cat("../html/tools.html")
+
+			div_block()
+			nsa_type_text_badge()
+			fmt.Print ("Network Investigation Tools.")
+			div_off()
+
+			create_tools_menu(website_url)
+
+			u, err := url.Parse(os.Getenv("QUERY_STRING"))
+			if err != nil {
+				panic(err)
+			}
+			q, err := url.ParseQuery(u.RawQuery)
+			if err != nil {
+				panic(err)
+			}
+			ip := q.Get("ip")
+			nameserver := q.Get("nameserver")
+
+			div_block()
+			span_color("blue")
+			fmt.Print ("host -a " + ip)
+			span_off()
+			br()
+
+			span_color ("blue")
+			fmt.Print ("using nameserver: " + nameserver )
+			span_off()
+			br()
+
+
+
+
+
+
+
+			// //      flexbox()
+                        // //div33()
+                        // float_left()
+                        // fmt.Print("QUERY_STRING:")
+                        // float_off()
+                        // float_right()
+                        // span_color("green")
+                        // fmt.Print(os.Getenv("QUERY_STRING"))
+                        // span_color("off")
+                        // float_off()
+                        // div_off()
+                        // flexbox_off()
+
+                        // //              flexbox()
+                        // floatbox()
+                        // div33_float_left()
+                        // fmt.Print("&nbsp")
+                        // div_off()
+                        // div66_float_left()
+                        // //float_right()
+                        // system_command("host",os.Getenv("REMOTE_ADDR"))
+                        // //              div_off()
+                        // floatbox_off()
+                        // //float_off()
+                        // //              flexbox_off()
+                }
+		/////////////////////////////////////// tools_host_menu //////////////////////////////////////////
+                if(strings.EqualFold(os.Getenv("QUERY_STRING"),"tools_host_html")){
+			cat("../html/tools_host.html")
+		}
+
+			
+
+		/////////////////////////////////////// tools_host //////////////////////////////////////////
+		if(strings.EqualFold(os.Getenv("QUERY_STRING"),"tools_host")){
+			cat("../html/host-child.html")
+		}
+
+		/////////////////////////////////////// tools_whois //////////////////////////////////////////
+                if(strings.EqualFold(os.Getenv("QUERY_STRING"),"tools_whois")){
+			cat("../html/tools_whois.html")
+		}
+
+		/////////////////////////////////////// version //////////////////////////////////////////
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"version")){
                         fmt.Println("<pre>" + version + "<br>")
                         fmt.Println("ip.go compiled on:    " + compile_time.DATE + "</pre><br>")
                 }
-                if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
+
+		/////////////////////////////////////// host //////////////////////////////////////////
+			if(strings.EqualFold(os.Getenv("QUERY_STRING"),"host")){
                         //      flexbox()
                         //div33()
                         float_left()
                         fmt.Print("QUERY_STRING:")
                         float_off()
                         float_right()
-                        color("green")
+                        span_color("green")
                         fmt.Print(os.Getenv("QUERY_STRING"))
-                        color("off")
+                        span_color("off")
                         float_off()
                         div_off()
                         flexbox_off()
@@ -308,7 +431,7 @@ func main() {
                         div33_float_left()
                         fmt.Print("&nbsp")
                         div_off()
-                        div66_float_left()
+			div66_float_left()
                         //float_right()
                         system_command("host",os.Getenv("REMOTE_ADDR"))
                         //              div_off()
@@ -316,6 +439,8 @@ func main() {
                         //float_off()
                         //              flexbox_off()
                 }
+	
+		/////////////////////////////////////// whois //////////////////////////////////////////
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"whois")){
                         //      flexbox()
                         //div33()
@@ -323,9 +448,9 @@ func main() {
                         fmt.Print("QUERY_STRING:")
                         float_off()
                         float_right()
-                        color("green")
+                        span_color("green")
                         fmt.Print(os.Getenv("QUERY_STRING"))
-                        color("off")
+                        span_color("off")
                         float_off()
                         div_off()
                         flexbox_off()
@@ -345,6 +470,7 @@ func main() {
                         //float_off()
                         //              flexbox_off()
                 }
+		/////////////////////////////////////// env //////////////////////////////////////////
                 if(strings.EqualFold(os.Getenv("QUERY_STRING"),"env")){
                         fmt.Println("The environment function is disabled for security reasons.<br>")
                         // fmt.Println("<pre>")
@@ -354,8 +480,9 @@ func main() {
                         // fmt.Println("</pre>")
                 }
 
-                if(strings.EqualFold(os.Getenv("QUERY_STRING"),"help")){
-                        fmt.Println("NSA // MasterTools provides:<br>")
+		/////////////////////////////////////// help //////////////////////////////////////////
+		if(strings.EqualFold(os.Getenv("QUERY_STRING"),"help")){
+                        nsa_type_text_badge ()
                         fmt.Println("ip.cgi?help<br>")
                         fmt.Println("ip.cgi?version<br>")
                         fmt.Println("ip.cgi?host<br>")

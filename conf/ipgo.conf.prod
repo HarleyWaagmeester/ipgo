@@ -3,6 +3,5 @@
 # and the second member of a line is the desired value for that setting.
 # i.e.  name value
 
-website_url              http://t520i.local/ipgo-test/ipgo
-website_directory        /home/nsa/websites/ipgo-test/ipgo
-
+website_url              _CHANGE_ME_TO_your_website_url_
+website_directory        _CHANGE_ME_TO_your_website_directory_
